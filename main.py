@@ -12,7 +12,7 @@ def home():
 
 @app.route("/all")
 def all_files():
-    files = os.listdir("files")
+    files = os.listdir("data")
     return render_template("all.html", files=files)
 
 
@@ -25,13 +25,13 @@ def upload():
         return "fatal: no selected file"
     if file:
         filename = secure_filename(file.filename)
-        file.save(os.path.join("files", filename))
+        file.save(os.path.join("data", filename))
         return redirect(url_for('send', filename=filename))
 
 
 @app.route("/file/<filename>")
 def send(filename):
-    return send_from_directory("files", filename)
+    return send_from_directory("data", filename)
 
 
 if __name__ == "__main__":
