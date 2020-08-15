@@ -18,7 +18,7 @@ node {
 	}
 	try {
 	    stage('build') {
-		    app = docker.build("karx1/simplecdn")
+		    app = docker.build("karx/simplecdn")
 	    }
 	    stage('Push image') {
 		    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
