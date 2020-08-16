@@ -53,7 +53,9 @@ def send(filename):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User().make(user_id)
+    with AuthManager() as auth:
+        hashed = auth.get(user_id)
+        return User(user_id, hashed, False)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -61,11 +63,10 @@ def login_page():
     if request.method == "POST":
         username = request.form["email"]
         password = request.form["password"]
-        user = User().make(username)
         with AuthManager() as auth:
-            if auth.check_password(user.password, password):
-                user.password = password
-                user.authenticated = True
+            hashed = auth.get(username)
+            if auth.check_password(hashed, password):
+                user = User(username, password, True)
                 login_user(user, remember=True)
                 return redirect(url_for("home"))
 

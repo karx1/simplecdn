@@ -1,22 +1,8 @@
-from auth import AuthManager
-
-
 class User:
-    def __init__(self):
-        self.username = None
-        self.password = None
-        self.authenticated = False
-
-    def make(self, username):
-        with AuthManager() as auth:
-            try:
-                password = auth.get(username)
-            except KeyError:
-                return None
-            else:
-                self.username = username
-                self.password = password
-                return self
+    def __init__(self, username, password, auth):
+        self.username = username
+        self.password = password
+        self.authenticated = auth
 
     def is_active(self):
         return True
