@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, send_from_directory, url_for
 from werkzeug.utils import secure_filename
 import os
-from flask_login import LoginManager, login_user
-from .user import User
-from .auth import AuthManager
+from flask_login import LoginManager, login_user, login_required, current_user, logout_user
+from user import User
+from auth import AuthManager
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -18,8 +18,11 @@ else:
     with open(key_file, "wb+") as f:
         f.write(key)
 
+app.secret_key = key
+
 
 @app.route("/")
+@login_required
 def home():
     return render_template("index.html")
 
@@ -60,7 +63,7 @@ def login_page():
         password = request.form["password"]
         user = User().make(username)
         with AuthManager() as auth:
-            if auth.check_password(password, user.password):
+            if auth.check_password(user.password, password):
                 user.password = password
                 user.authenticated = True
                 login_user(user, remember=True)
@@ -69,9 +72,30 @@ def login_page():
     return render_template("login.html")
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["email"]
+        password = request.form["password"]
+        with AuthManager() as auth:
+            auth.add(username, password)
+            return redirect(url_for("login_page"))
+
+    return render_template("signup.html")
+
+
 @login_manager.unauthorized_handler
 def unauthorized():
     return redirect(url_for("login_page"))
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    user = current_user
+    name = user.get_id()
+    logout_user()
+    return f"Goodbye, {name}!"
 
 
 if __name__ == "__main__":

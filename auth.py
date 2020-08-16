@@ -1,4 +1,3 @@
-import errno
 import pickle
 from passlib.context import CryptContext
 import os
@@ -40,6 +39,7 @@ class AuthManager:
         return self.ctx.hash(password)
 
     def check_password(self, hashed, password):
+        print(hashed)
         return self.ctx.verify(password, hashed)
 
     def add(self, username, password):

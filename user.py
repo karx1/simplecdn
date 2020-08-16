@@ -1,4 +1,4 @@
-from .auth import AuthManager
+from auth import AuthManager
 
 
 class User:
