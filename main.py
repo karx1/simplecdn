@@ -99,5 +99,13 @@ def logout():
     return f"Goodbye, {name}!"
 
 
+@app.route("/profile")
+@login_required
+def profile():
+    user = current_user
+    files = os.listdir(f"data/{user.get_id()}")
+    return render_template("profile.html", user=user, files=files)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
