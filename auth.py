@@ -5,7 +5,7 @@ import os
 
 class AuthManager:
     def __init__(self):
-        self.filename = "data/system/auth.txt"
+        self.filename = "data/auth.txt"
         self.auth = {}
         self.ctx = CryptContext(
             schemes=["pbkdf2_sha256"],
@@ -25,7 +25,6 @@ class AuthManager:
             return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        os.makedirs(os.path.dirname(self.filename), exist_ok=True)
         with open(self.filename, "wb+") as file:
             d = {}
             for key, value in self.auth.items():
