@@ -1,6 +1,5 @@
 import pickle
 from passlib.context import CryptContext
-import os
 
 
 class AuthManager:
@@ -41,6 +40,7 @@ class AuthManager:
         return self.ctx.verify(password, hashed)
 
     def add(self, username, password):
+        assert username not in self.auth
         password = self.encrypt(password)
         self.auth[username] = password
 

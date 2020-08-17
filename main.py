@@ -90,6 +90,7 @@ def register():
         password = request.form["password"]
         with AuthManager() as auth:
             auth.add(username, password)
+            os.makedirs(os.path.join("data", username), exist_ok=False)
             return redirect(url_for("login_page"))
 
     return render_template("signup.html")
