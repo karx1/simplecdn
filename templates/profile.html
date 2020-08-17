@@ -14,7 +14,7 @@
 			My files:
 			<ul>
 				{% for file in files %}
-					<li><a href="/file/{{ file }}">{{ file }}</a></li>
+					<li><a href="/file/{{ user.get_id() }}/{{ file }}">{{ file }}</a></li>
 				{% endfor %}
 			</ul>
 		</div>

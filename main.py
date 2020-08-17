@@ -19,12 +19,21 @@ def home():
 
 @app.route("/all")
 def all_files():
-    files = os.listdir("data")
+    files = []
+    for level in os.listdir("data"):
+        print(level)
+        if os.path.isdir(f"data/{level}"):
+            print("Is directory")
+            for file in os.listdir(f"data/{level}"):
+                files.append(f"{level}/{file}")
+    print(files)
     return render_template("all.html", files=files)
 
 
 @app.route("/upload", methods=["POST"])
 def upload():
+    user = current_user
+    name = user.get_id()
     if not request.method == "POST":
         return "Not using POST request. Maybe something went wrong?"
     file = request.files["file"]
@@ -32,13 +41,14 @@ def upload():
         return "fatal: no selected file"
     if file:
         filename = secure_filename(file.filename)
-        file.save(os.path.join("data", filename))
-        return redirect(url_for('send', filename=filename))
+        file.save(os.path.join(os.path.join("data", name), filename))
+        return redirect(url_for('send', user=name, filename=filename))
 
 
-@app.route("/file/<filename>")
-def send(filename):
-    return send_from_directory("data", filename)
+@app.route("/file/<user>/<filename>")
+def send(user, filename):
+    filename = secure_filename(filename)
+    return send_from_directory("data", os.path.join(user, filename))
 
 
 @login_manager.user_loader
