@@ -21,6 +21,10 @@ div.wrapper{
 		background-color: #666666;
 		color: white;
 	}
+	a:link, a:visited {
+		color: white;
+		text-decoration: underline white;
+	}
 }
 
 @media (prefers-color-scheme: no-preference) {
