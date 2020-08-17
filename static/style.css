@@ -4,3 +4,27 @@ div.wrapper{
 	width: 60%;
 	padding:  10px;
 }
+
+/* dark mode */
+.darkwrapper {
+	background-color: #ffffff;
+}
+
+@media (prefers-color-scheme: light) {
+	.darkwrapper {
+		background-color: #ffffff;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.darkwrapper {
+		background-color: #666666;
+		color: white;
+	}
+}
+
+@media (prefers-color-scheme: no-preference) {
+	.darkwrapper {
+		background-color: #ffffff;
+	}
+}
