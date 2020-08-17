@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_from_directory, url_for
+from flask import Flask, render_template, request, redirect, send_from_directory, url_for, flash
 from werkzeug.utils import secure_filename
 import os
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
@@ -73,12 +73,25 @@ def login_page():
     if request.method == "POST":
         username = request.form["email"]
         password = request.form["password"]
+        if username == "":
+            flash("No username was provided.")
+            return redirect(url_for("login_page"))
+        elif password == "":
+            flash("No password was provided")
+            return redirect(url_for("login_page"))
         with AuthManager() as auth:
-            hashed = auth.get(username)
+            try:
+                hashed = auth.get(username)
+            except KeyError:
+                flash("Your username or password was incorrect.")
+                return redirect(url_for("login_page"))
             if auth.check_password(hashed, password):
                 user = User(username, password, True)
                 login_user(user, remember=True)
                 return redirect(url_for("home"))
+            else:
+                flash("Your username or password was incorrect.")
+                return redirect(url_for("login_page"))
 
     return render_template("login.html")
 
@@ -88,9 +101,20 @@ def register():
     if request.method == "POST":
         username = request.form["email"]
         password = request.form["password"]
+        if username == "":
+            flash("No username was provided")
+            return redirect(url_for("register"))
+        elif password == "":
+            flash("No password was provided")
+            return redirect(url_for("register"))
         with AuthManager() as auth:
-            auth.add(username, password)
-            os.makedirs(os.path.join("data", username), exist_ok=False)
+            try:
+                auth.add(username, password)
+            except AssertionError:
+                flash("This username is already registered.")
+                return redirect(url_for("register"))
+            os.makedirs(os.path.join("data", username), exist_ok=True)
+            flash("Successfully registered. Please login below.")
             return redirect(url_for("login_page"))
 
     return render_template("signup.html")
@@ -107,7 +131,8 @@ def logout():
     user = current_user
     name = user.get_id()
     logout_user()
-    return f"Goodbye, {name}!"
+    flash(f"Goodbye, {name}!")
+    return redirect(url_for("login_page"))
 
 
 @app.route("/profile")
