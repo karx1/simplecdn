@@ -10,7 +10,7 @@
 	<body class="darkwrapper">
 		<div class="wrapper">
 			<h1>Welcome, {{ user.get_id() }}!</h1>
-			<a href="/"><button>Home</button></a><br><br>
+			<a href="/"><button>Home</button></a> <a href="/logout"><button>Logout</button></a><br><br>
 			My files:
 			<ul>
 				{% for file in files %}
