@@ -18,7 +18,7 @@ div.wrapper{
 
 @media (prefers-color-scheme: dark) {
 	.darkwrapper {
-		background-color: #666666;
+		background-color: black;
 		color: white;
 	}
 	a:link, a:visited {
