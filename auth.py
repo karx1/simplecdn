@@ -1,6 +1,5 @@
 import pickle
 from passlib.context import CryptContext
-import os
 
 
 class AuthManager:
