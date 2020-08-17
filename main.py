@@ -8,17 +8,7 @@ from auth import AuthManager
 app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
-key_file = "data/system/key.txt"
-if os.path.exists(key_file) and os.path.isfile(key_file):
-    with open(key_file, "rb") as f:
-        key = f.read()
-else:
-    key = os.urandom(16)
-    os.makedirs(os.path.dirname(key_file), exist_ok=True)
-    with open(key_file, "wb+") as f:
-        f.write(key)
-
-app.secret_key = key
+app.secret_key = os.urandom(16)
 
 
 @app.route("/")
@@ -79,6 +69,7 @@ def register():
         username = request.form["email"]
         password = request.form["password"]
         with AuthManager() as auth:
+            os.makedirs(f"data/{username}", exist_ok=False)
             auth.add(username, password)
             return redirect(url_for("login_page"))
 
