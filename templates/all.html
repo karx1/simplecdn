@@ -10,7 +10,7 @@
 	<body class="darkwrapper">
 		<div class="wrapper">
 			<h1>Here is a list of all files on the server.</h1>
-			<a href="/">Go back home</a><br><br>
+			<a href="/"><button>Home</button></a><br><br>
 			<ul>
 				{% for file in files %}
 					<li><a href="/file/{{ file }}">{{ file }}</a></li>
