@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>All files</title>
+		<title>Profile</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.css">
@@ -9,11 +9,12 @@
 	</head>
 	<body class="darkwrapper">
 		<div class="wrapper">
-			<h1>Here is a list of all files on the server.</h1>
-			<a href="/"><button>Home</button></a><br><br>
+			<h1>Welcome, {{ user.get_id() }}!</h1>
+			<a href="/"><button>Home</button></a> <a href="/logout"><button>Logout</button></a><br><br>
+			My files:
 			<ul>
 				{% for file in files %}
-					<li><a href="/file/{{ file }}">{{ file }}</a></li>
+					<li><a href="/file/{{ user.get_id() }}/{{ file }}">{{ file }}</a></li>
 				{% endfor %}
 			</ul>
 		</div>

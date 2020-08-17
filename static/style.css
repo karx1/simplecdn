@@ -4,3 +4,58 @@ div.wrapper{
 	width: 60%;
 	padding:  10px;
 }
+
+/* dark mode */
+.darkwrapper {
+	background-color: #ffffff;
+}
+
+
+@media (prefers-color-scheme: light) {
+	.darkwrapper {
+		background-color: #ffffff;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.darkwrapper {
+		background-color: black;
+		color: #A49D91;
+	}
+	button, input[type=submit] {
+		background-color: #612784;
+		color: white;
+		border: #612784;
+	}
+	input[type="text"] {
+		color: white;
+		border: 1px solid #A49D91;
+	}
+}
+
+@media (prefers-color-scheme: no-preference) {
+	.darkwrapper {
+		background-color: #ffffff;
+	}
+}
+
+.alert {
+	padding: 20px;
+	background-color: #f44336;
+	color: white;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: black;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.css">
+		<link rel="stylesheet" href="static/style.css">
+	</head>
+	<body class="darkwrapper">
+		<div class="wrapper">
+			<h1>Login</h1>
+			Don't have an account? Be sure to <a href="register">Sign Up</a>.
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					{% for message in messages %}
+						<div class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<form action="/login" method="post">
+				<label for="email">Username</label>
+				<input type="text" placeholder="someone23" id="email" name="email">
+				<label for="password">Password</label>
+				<input type="text" id="password" name="password">
+				<input type="submit" class="button" value="Login">
+			</form>
+		</div>
+	</body>
+</html>
