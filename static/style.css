@@ -4,3 +4,37 @@ div.wrapper{
 	width: 60%;
 	padding:  10px;
 }
+
+/* dark mode */
+.darkwrapper {
+	background-color: #ffffff;
+}
+
+
+@media (prefers-color-scheme: light) {
+	.darkwrapper {
+		background-color: #ffffff;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.darkwrapper {
+		background-color: black;
+		color: #A49D91;
+	}
+	button, input[type=submit] {
+		background-color: #612784;
+		color: white;
+		border: #612784;
+	}
+	input[type="text"] {
+		color: white;
+		border: 1px solid #A49D91;
+	}
+}
+
+@media (prefers-color-scheme: no-preference) {
+	.darkwrapper {
+		background-color: #ffffff;
+	}
+}
