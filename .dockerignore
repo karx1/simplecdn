@@ -1,0 +1,6 @@
+version.txt
+.git
+.gitignore
+Jenkinsfile
+Dockerfile
+.Dockerignore
