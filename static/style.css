@@ -27,7 +27,7 @@ div.wrapper{
 		color: white;
 		border: #612784;
 	}
-	input[type="text"] {
+	input[type="text"], input[type="password"] {
 		color: white;
 		border: 1px solid #A49D91;
 	}
