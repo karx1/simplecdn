@@ -27,7 +27,7 @@ div.wrapper{
 		color: white;
 		border: #612784;
 	}
-	input[type="text"] {
+	input[type="text"], input[type="password"] {
 		color: white;
 		border: 1px solid #A49D91;
 	}
@@ -40,9 +40,10 @@ div.wrapper{
 }
 
 .alert {
-	padding: 20px;
+	padding: 1.0rem 3.0rem;
 	background-color: #f44336;
 	color: white;
+	border-radius: .4rem
 }
 
 .closebtn {
