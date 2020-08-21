@@ -21,8 +21,10 @@ node {
 		    app = docker.build("karx/simplecdn")
 	    }
 	    stage('Push image') {
+		    def version = readFile("version.txt")
 		    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
 		  	    app.push("latest")
+                            app.push(version)
 		    }
 	    }
 	} catch (e) {
