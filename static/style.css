@@ -40,9 +40,10 @@ div.wrapper{
 }
 
 .alert {
-	padding: 20px;
+	padding: 1.0rem 3.0rem;
 	background-color: #f44336;
 	color: white;
+	border-radius: .4rem
 }
 
 .closebtn {
