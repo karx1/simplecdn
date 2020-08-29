@@ -4,3 +4,4 @@ version.txt
 Jenkinsfile
 Dockerfile
 .Dockerignore
+data/
