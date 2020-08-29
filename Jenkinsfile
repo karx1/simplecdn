@@ -29,9 +29,14 @@ node {
 	    }
 	} catch (e) {
 	    setBuildStatus("Build failed", "FAILURE");
-
+	    withCredentials([string(credentialsId: 'karx-discord-webhook', variable: 'DISCORD')]) {
+		    discordSend webhookURL: DISCORD, title: "Jenkins Pipeline Build", link: env.BUILD_URL, result: currentBuild.currentResult, footer: "SimpleCDN", description: "Build FAILURE"
+		}
 	    throw e
 	} finally {
 	    setBuildStatus("Build succeeded", "SUCCESS");
+	    withCredentials([string(credentialsId: 'karx-discord-webhook', variable: 'DISCORD')]) {
+		    discordSend webhookURL: DISCORD, title: "Jenkins Pipeline Build", link: env.BUILD_URL, result: currentBuild.currentResult, footer: "SimpleCDN", description: "Build SUCCESS"
+		}
 	}
 }
