@@ -5,3 +5,5 @@ Jenkinsfile
 Dockerfile
 .Dockerignore
 data/
+README.md
+Jenkinsfile
