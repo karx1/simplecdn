@@ -62,7 +62,7 @@ def upload():
 @app.route("/file/<user>/<filename>")
 def send(user, filename):
     filename = secure_filename(filename)
-    return send_from_directory("data", os.path.join(user, filename))
+    return send_from_directory(DATA_DIR, os.path.join(user, filename))
 
 
 @login_manager.user_loader
@@ -117,7 +117,7 @@ def register():
             except AssertionError:
                 flash("This username is already taken.")
                 return redirect(url_for("register"))
-            os.makedirs(os.path.join("data", username), exist_ok=True)
+            os.makedirs(os.path.join(DATA_DIR, username), exist_ok=True)
             flash("Successfully registered. Please login below.")
             return redirect(url_for("login_page"))
 
@@ -143,7 +143,7 @@ def logout():
 @login_required
 def profile():
     user = current_user
-    files = os.listdir(f"data/{user.get_id()}")
+    files = os.listdir(f"{DATA_DIR}/{user.get_id()}")
     return render_template("profile.html", user=user, files=files)
 
 
