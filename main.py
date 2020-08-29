@@ -4,11 +4,15 @@ import os
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from user import User
 from auth import AuthManager
+from env import check_env
+
+# Check whether we are running on docker
+DATA_DIR = check_env()
 
 app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
-key_file = "data/key.txt"
+key_file = f"{DATA_DIR}/key.txt"
 if os.path.exists(key_file) and os.path.isfile(key_file):
     with open(key_file, "rb") as f:
         key = f.read()
@@ -30,11 +34,11 @@ def home():
 @app.route("/all")
 def all_files():
     files = []
-    for level in os.listdir("data"):
+    for level in os.listdir(DATA_DIR):
         print(level)
-        if os.path.isdir(f"data/{level}"):
+        if os.path.isdir(f"{DATA_DIR}/{level}"):
             print("Is directory")
-            for file in os.listdir(f"data/{level}"):
+            for file in os.listdir(f"{DATA_DIR}/{level}"):
                 files.append(f"{level}/{file}")
     print(files)
     return render_template("all.html", files=files)
@@ -51,7 +55,7 @@ def upload():
         return "fatal: no selected file"
     if file:
         filename = secure_filename(file.filename)
-        file.save(os.path.join(os.path.join("data", name), filename))
+        file.save(os.path.join(os.path.join(DATA_DIR, name), filename))
         return redirect(url_for('send', user=name, filename=filename))
 
 
@@ -111,7 +115,7 @@ def register():
             try:
                 auth.add(username, password)
             except AssertionError:
-                flash("This username is already registered.")
+                flash("This username is already taken.")
                 return redirect(url_for("register"))
             os.makedirs(os.path.join("data", username), exist_ok=True)
             flash("Successfully registered. Please login below.")

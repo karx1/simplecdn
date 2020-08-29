@@ -1,10 +1,13 @@
 import pickle
 from passlib.context import CryptContext
+from env import check_env
+
+DATA_DIR = check_env()
 
 
 class AuthManager:
     def __init__(self):
-        self.filename = "data/auth.txt"
+        self.filename = f"{DATA_DIR}/auth.txt"
         self.auth = {}
         self.ctx = CryptContext(
             schemes=["pbkdf2_sha256"],
