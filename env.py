@@ -8,3 +8,6 @@ def check_env():
     else:
         # In dev environment, return local directory
         return "data"
+
+def check_env_bool():
+    return os.path.isfile("/.containernv")
