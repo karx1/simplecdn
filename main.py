@@ -4,7 +4,7 @@ import os
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from user import User
 from auth import AuthManager
-from env import check_env
+from env import check_env, check_env_bool
 
 # Check whether we are running on docker
 DATA_DIR = check_env()
@@ -148,4 +148,10 @@ def profile():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    if check_env_bool():
+        port = 8080
+        debug = False
+    else:
+        port = 7080
+        debug = True
+    app.run(host="0.0.0.0", port=port, debug=debug)
