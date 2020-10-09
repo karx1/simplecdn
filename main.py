@@ -1,7 +1,21 @@
-from flask import Flask, render_template, request, redirect, send_from_directory, url_for, flash
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    send_from_directory,
+    url_for,
+    flash,
+)
 from werkzeug.utils import secure_filename
 import os
-from flask_login import LoginManager, login_user, login_required, current_user, logout_user
+from flask_login import (
+    LoginManager,
+    login_user,
+    login_required,
+    current_user,
+    logout_user,
+)
 from user import User
 from auth import AuthManager
 from env import check_env, check_env_bool
@@ -51,12 +65,12 @@ def upload():
     if not request.method == "POST":
         return "Not using POST request. Maybe something went wrong?"
     file = request.files["file"]
-    if file.filename == '':
+    if file.filename == "":
         return "fatal: no selected file"
     if file:
         filename = secure_filename(file.filename)
         file.save(os.path.join(os.path.join(DATA_DIR, name), filename))
-        return redirect(url_for('send', user=name, filename=filename))
+        return redirect(url_for("send", user=name, filename=filename))
 
 
 @app.route("/file/<user>/<filename>")

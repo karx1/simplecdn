@@ -12,7 +12,7 @@ class AuthManager:
         self.ctx = CryptContext(
             schemes=["pbkdf2_sha256"],
             default="pbkdf2_sha256",
-            pbkdf2_sha256__default_rounds=30000
+            pbkdf2_sha256__default_rounds=30000,
         )
 
     def __enter__(self):
