@@ -2,7 +2,7 @@ import os
 
 
 def check_env():
-    if os.path.isfile("/.dockerenv"):
+    if os.path.isfile("/.containernv"):
         # In container, return user mounted directory
         return "/data"
     else:
