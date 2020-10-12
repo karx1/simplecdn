@@ -10,6 +10,16 @@
 	<body class="darkwrapper">
 		<div class="wrapper">
 			<h1>Welcome to SimpleCDN!</h1>
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					{% for message in messages %}
+						<div class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
 			<a href="/all"><button>All Files</button></a> <a href="/profile"><button>Profile</button></a><br>
 			Please upload a file below.<br><br>
 			<form action="/upload" method="post" enctype="multipart/form-data">

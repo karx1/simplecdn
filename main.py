@@ -66,10 +66,14 @@ def upload():
         return "Not using POST request. Maybe something went wrong?"
     file = request.files["file"]
     if file.filename == "":
-        return "fatal: no selected file"
+        flash("No file was provided!")
+        return redirect(url_for("home"))
     if file:
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(os.path.join(DATA_DIR, name), filename))
+        filename = os.path.join(os.path.join(DATA_DIR, name), secure_filename(file.filename))
+        if os.path.isfile(filename):
+            flash("This file already exists!")
+            return redirect(url_for("home"))
+        file.save(filename)
         return redirect(url_for("send", user=name, filename=filename))
 
 
