@@ -20,6 +20,12 @@ node {
 	    stage('build') {
 		    app = docker.build("karx/simplecdn")
 	    }
+		stage("Test Image") {
+			app.inside() {
+				sh "cd /app"
+				sh "python -m unittest discover --verbose"
+			}
+		}
 	    stage('Push image') {
 		    def version = readFile("version.txt")
 		    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
