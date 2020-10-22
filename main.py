@@ -63,6 +63,7 @@ def all_files():
 
 
 @app.route("/upload", methods=["POST"])
+@login_required
 def upload():
     user = current_user
     name = user.get_id()
