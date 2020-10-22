@@ -20,10 +20,14 @@ from user import User
 from auth import AuthManager
 from env import check_env, check_env_bool
 
-# Check whether we are running on docker
-DATA_DIR = check_env()
-
 app = Flask(__name__)
+
+if app.testing:
+    DATA_DIR = "data"
+else:
+    # Not in testing mode, check whether we are running on docker
+    DATA_DIR = check_env()
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 key_file = f"{DATA_DIR}/key.txt"
@@ -164,12 +168,23 @@ def profile():
     files = os.listdir(f"{DATA_DIR}/{user.get_id()}")
     return render_template("profile.html", user=user, files=files)
 
+@app.route("/user")
+@login_required
+def user():
+    return {
+        "username": current_user.get_id(),
+        "password": current_user.password
+    }
+
 
 if __name__ == "__main__":
     if check_env_bool():
         port = 8080
         debug = False
     else:
+        port = 7080
+        debug = True
+    if app.testing:
         port = 7080
         debug = True
     app.run(host="0.0.0.0", port=port, debug=debug)
