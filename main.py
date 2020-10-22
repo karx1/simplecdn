@@ -74,7 +74,9 @@ def upload():
         flash("No file was provided!")
         return redirect(url_for("home"))
     if file:
-        filename = os.path.join(os.path.join(DATA_DIR, name), secure_filename(file.filename))
+        filename = os.path.join(
+            os.path.join(DATA_DIR, name), secure_filename(file.filename)
+        )
         if os.path.isfile(filename):
             flash("This file already exists!")
             return redirect(url_for("home"))
@@ -169,13 +171,11 @@ def profile():
     files = os.listdir(f"{DATA_DIR}/{user.get_id()}")
     return render_template("profile.html", user=user, files=files)
 
+
 @app.route("/user")
 @login_required
 def user():
-    return {
-        "username": current_user.get_id(),
-        "password": current_user.password
-    }
+    return {"username": current_user.get_id(), "password": current_user.password}
 
 
 if __name__ == "__main__":
