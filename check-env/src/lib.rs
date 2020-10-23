@@ -32,9 +32,15 @@ fn get_data_dir() -> PyResult<String> {
     Ok(get_env_var()?)
 }
 
+#[pyfunction]
+fn check_bool() -> PyResult<bool> {
+    Ok(!env::var("DEBUG").is_err())
+}
+
 #[pymodule]
 fn check_env(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_data_dir, m)?)?;
+    m.add_function(wrap_pyfunction!(check_bool, m)?)?;
 
     Ok(())
 }
