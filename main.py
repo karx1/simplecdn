@@ -18,15 +18,12 @@ from flask_login import (
 )
 from user import User
 from auth import AuthManager
-from env import check_env, check_env_bool
+from env import check_env_bool
+import check_env
 
 app = Flask(__name__)
 
-if app.testing:
-    DATA_DIR = "data"
-else:
-    # Not in testing mode, check whether we are running on docker
-    DATA_DIR = check_env()
+DATA_DIR = check_env.get_data_dir()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -79,7 +76,7 @@ def upload():
             flash("This file already exists!")
             return redirect(url_for("home"))
         file.save(filename)
-        return redirect(url_for("send", user=name, filename=filename))
+        return redirect(url_for("send", user=name, filename=os.path.basename(filename)))
 
 
 @app.route("/file/<user>/<filename>")

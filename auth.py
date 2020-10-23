@@ -1,8 +1,8 @@
 import pickle
 from passlib.context import CryptContext
-from env import check_env
+import check_env
 
-DATA_DIR = check_env()
+DATA_DIR = check_env.get_data_dir()
 
 
 class AuthManager:
