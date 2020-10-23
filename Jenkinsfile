@@ -23,7 +23,8 @@ node {
 		stage("Test Image") {
 			app.inside() {
 				sh "cd /app"
-				sh "python -m unittest discover --verbose"
+				sh "rm -rf data"
+				sh "DATA_DIR=/app/data DEBUG=true python -m unittest discover --verbose"
 			}
 		}
 	    stage('Push image') {
