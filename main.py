@@ -18,7 +18,6 @@ from flask_login import (
 )
 from user import User
 from auth import AuthManager
-from env import check_env_bool
 import check_env
 
 app = Flask(__name__)
@@ -176,13 +175,10 @@ def user():
 
 
 if __name__ == "__main__":
-    if check_env_bool():
+    if check_env.check_bool():
+        port = 7080
+        debug = True
+    else:
         port = 8080
         debug = False
-    else:
-        port = 7080
-        debug = True
-    if app.testing:
-        port = 7080
-        debug = True
     app.run(host="0.0.0.0", port=port, debug=debug)
