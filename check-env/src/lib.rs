@@ -16,7 +16,7 @@ impl std::convert::From<PyVarError> for PyErr {
 
 impl std::fmt::Display for PyVarError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "VarError: {}", self.msg)
+        write!(f, "{}", self.msg)
     }
 }
 
