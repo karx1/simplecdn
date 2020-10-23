@@ -3,7 +3,8 @@ version.txt
 .gitignore
 Jenkinsfile
 Dockerfile
-.Dockerignore
+.dockerignore
 data/
 README.md
 Jenkinsfile
+check-env/

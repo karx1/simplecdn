@@ -4,3 +4,5 @@ files/
 __pycache__
 data/
 .vscode/
+check-env/target/
+check-env/Cargo.lock
