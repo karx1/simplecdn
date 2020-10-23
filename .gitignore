@@ -6,3 +6,4 @@ data/
 .vscode/
 check-env/target/
 check-env/Cargo.lock
+check_env.so
